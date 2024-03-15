@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:diplom_final2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1312">
+        Title="MainWindow" Height="641" Width="1312">
     <Grid Margin="10,0,10,0">
-        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,137,10">
+        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,117,10">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="ContentTemplate">
