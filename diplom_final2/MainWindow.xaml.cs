@@ -19,35 +19,15 @@ using OfficeOpenXml;
 
 namespace diplom_final2
 {
-    public class ExcelDataItem
-    {
-        public string NN { get; set; }
-        public string Фамилия { get; set; }
-        public string ФИО { get; set; }
-        public string Должность { get; set; }
-        public string Бюджет { get; set; }
-        public string Внебюджет { get; set; }
-        public string Федералы { get; set; }
-        public string Часы_по_бюджету { get; set; }
-        public string Ставка_по_бюджету { get; set; }
-        public string Часы_по_внебюджету { get; set; }
-        public string Ставка_по_внебюджету { get; set; }
-        public string Ставка_итого { get; set; }
-        public string Необхадимая_ставка { get; set; }
-    }
-
     public partial class MainWindow : Window
     {
-        private ObservableCollection<ExcelDataItem> excelDataCollection;
 
         public MainWindow()
         {
             InitializeComponent();
-            excelDataCollection = new ObservableCollection<ExcelDataItem>();
-            raspr.ItemsSource = excelDataCollection;
             OpenFile();
         }
-
+        
         private void OpenFile()
         {
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -63,76 +43,141 @@ namespace diplom_final2
             }
         }
 
+        public class DataExcel
+        {
+            public int NN { get; set; }
+            public string Фамилия { get; set; }
+            public string ФИО { get; set; }
+            public string Должность { get; set; }
+            public float? Бюджет { get; set; }
+            public float? Внебюджет { get; set; }
+            public float? Федералы { get; set; }
+            public float? Часы_по_бюджету { get; set; }
+            public float? Ставка_по_бюджету { get; set; }
+            public float? Часы_по_внебюджету { get; set; }
+            public float? Ставка_по_внебюджету { get; set; }
+            public float? Ставка_итого { get; set; }
+            public float? Необходимая_ставка { get; set; }
+
+            public void SetPropertyValue(int columnIndex, object value)
+            {
+                if (value != null)
+                {
+                    switch (columnIndex)
+                    {
+                        case 1:
+                            int.TryParse(value.ToString(), out int nnValue);
+                            NN = nnValue;
+                            break;
+                        case 2:
+                            Фамилия = value.ToString();
+                            break;
+                        case 3:
+                            ФИО = value.ToString();
+                            break;
+                        case 4:
+                            Должность = value.ToString();
+                            break;
+                        case 5:
+                            Бюджет = ConvertToFloat(value);
+                            break;
+                        case 6:
+                            Внебюджет = ConvertToFloat(value);
+                            break;
+                        case 7:
+                            Федералы = ConvertToFloat(value);
+                            break;
+                        case 8:
+                            Часы_по_бюджету = ConvertToFloat(value);
+                            break;
+                        case 9:
+                            Ставка_по_бюджету = ConvertToFloat(value);
+                            break;
+                        case 10:
+                            Часы_по_внебюджету = ConvertToFloat(value);
+                            break;
+                        case 11:
+                            Ставка_по_внебюджету = ConvertToFloat(value);
+                            break;
+                        case 12:
+                            Ставка_итого = ConvertToFloat(value);
+                            break;
+                        case 13:
+                            Необходимая_ставка = ConvertToFloat(value);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            private float? ConvertToFloat(object value)
+            {
+                if (value != null && float.TryParse(value.ToString(), out float floatValue))
+                {
+                    return floatValue;
+                }
+                return null;
+            }
+        }
+
         private void LoadExcelData(string filePath)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            excelDataCollection.Clear();
-
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                // Загрузка данных в список объектов
+                List<DataExcel> dataList = new List<DataExcel>();
                 int rowCount = worksheet.Dimension.Rows;
                 int colCount = worksheet.Dimension.Columns;
 
                 for (int row = 2; row <= rowCount; row++)
                 {
-                    ExcelDataItem item = new ExcelDataItem();
+                    DataExcel dataItem = new DataExcel();
                     for (int col = 1; col <= colCount; col++)
                     {
                         var cellValue = worksheet.Cells[row, col].Value;
-
-                        switch (col)
-                        {
-                            case 1:
-                                item.NN = cellValue?.ToString();
-                                break;
-                            case 2:
-                                item.Фамилия = cellValue?.ToString();
-                                break;
-                            case 3:
-                                item.ФИО = cellValue?.ToString();
-                                break;
-                            case 4:
-                                item.Должность = cellValue?.ToString();
-                                break;
-                            case 5:
-                                item.Бюджет = cellValue?.ToString();
-                                break;
-                            case 6:
-                                item.Внебюджет = cellValue?.ToString();
-                                break;
-                            case 7:
-                                item.Федералы = cellValue?.ToString();
-                                break;
-                            case 8:
-                                item.Часы_по_бюджету = cellValue?.ToString();
-                                break;
-                            case 9:
-                                item.Ставка_по_бюджету = cellValue?.ToString();
-                                break;
-                            case 10:
-                                item.Часы_по_внебюджету = cellValue?.ToString();
-                                break;
-                            case 11:
-                                item.Ставка_по_внебюджету = cellValue?.ToString();
-                                break;
-                            case 12:
-                                item.Ставка_итого = cellValue?.ToString();
-                                break;
-                            case 13:
-                                item.Необхадимая_ставка = cellValue?.ToString();
-                                break;
-                        }
+                        dataItem.SetPropertyValue(col, cellValue);
                     }
-                    excelDataCollection.Add(item);
+                    dataList.Add(dataItem);
                 }
+                raspr.ItemsSource = dataList;
             }
         }
 
+        private void SaveData(string filePath)
+        {
+            try
+            {
+                List<DataExcel> dataList = raspr.ItemsSource.Cast<DataExcel>().ToList();
+
+                using (var package = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                    for (int i = 0; i < dataList.Count; i++)
+                    {
+                        worksheet.Cells[i + 2, 2].Value = dataList[i].Фамилия;
+                        worksheet.Cells[i + 2, 3].Value = dataList[i].ФИО;
+                        // Добавьте код для остальных свойств
+                    }
+
+                    package.Save();
+                }
+
+                MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            SaveData("Распределение нагрузки кафедры по преподавателям.xlsm");
         }
     }
 }

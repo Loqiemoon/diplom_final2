@@ -5,10 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:diplom_final2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="raspr" AutoGenerateColumns="True" Margin="10,10,189,126"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="638,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        Title="MainWindow" Height="450" Width="1312">
+    <Grid Margin="10,0,10,0">
+        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,137,10">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding}"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="NN" Binding="{Binding NN}" Width="30" />
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Фамилия}" Width="80"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding ФИО}" Width="200"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Должность}" Width="80"/>
+                <DataGridTextColumn Header="Бюджет" Binding="{Binding Бюджет}" Width="80"/>
+                <DataGridTextColumn Header="Внебюджет" Binding="{Binding Внебюджет}" Width="80"/>
+                <DataGridTextColumn Header="Федералы" Binding="{Binding Федералы}" Width="80"/>
+                <DataGridTextColumn Header="Часы по бюджету" Binding="{Binding Часы_по_бюджету}" Width="80"/>
+                <DataGridTextColumn Header="Ставка по бюджету" Binding="{Binding Ставка_по_бюджету}" Width="80"/>
+                <DataGridTextColumn Header="Часы по внебюджету" Binding="{Binding Часы_по_внебюджету}" Width="80"/>
+                <DataGridTextColumn Header="Ставка по внебюджету" Binding="{Binding Ставка_по_внебюджету}" Width="80"/>
+                <DataGridTextColumn Header="Ставка итого" Binding="{Binding Ставка_итого}" Width="88"/>
+                <DataGridTextColumn Header="Необходимая ставка" Binding="{Binding Необходимая_ставка}" Width="88"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="1212,13,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>
