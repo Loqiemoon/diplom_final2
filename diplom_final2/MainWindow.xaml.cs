@@ -28,7 +28,7 @@ namespace diplom_final2
             OpenFile();
         }
         
-        private void OpenFile()
+        private void OpenFile() // Открываю файл в корне
         {
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Распределение нагрузки кафедры по преподавателям.xlsm");
@@ -43,7 +43,7 @@ namespace diplom_final2
             }
         }
 
-        public class DataExcel
+        public class DataExcel // Название столбцов и их типы дынных
         {
             public int NN { get; set; }
             public string Фамилия { get; set; }
@@ -59,7 +59,7 @@ namespace diplom_final2
             public float? Ставка_итого { get; set; }
             public float? Необходимая_ставка { get; set; }
 
-            public void SetPropertyValue(int columnIndex, object value)
+            public void Value(int columnIndex, object value)
             {
                 if (value != null)
                 {
@@ -121,7 +121,7 @@ namespace diplom_final2
             }
         }
 
-        private void LoadExcelData(string filePath)
+        private void LoadExcelData(string filePath) // Заношу данные в datagrid
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(new FileInfo(filePath)))
@@ -133,13 +133,13 @@ namespace diplom_final2
                 int rowCount = worksheet.Dimension.Rows;
                 int colCount = worksheet.Dimension.Columns;
 
-                for (int row = 2; row <= rowCount; row++)
+                for (int row = 2; row <= 27; row++)
                 {
                     DataExcel dataItem = new DataExcel();
-                    for (int col = 1; col <= colCount; col++)
+                    for (int col = 1; col <= 13; col++)
                     {
                         var cellValue = worksheet.Cells[row, col].Value;
-                        dataItem.SetPropertyValue(col, cellValue);
+                        dataItem.Value(col, cellValue);
                     }
                     dataList.Add(dataItem);
                 }
@@ -147,7 +147,7 @@ namespace diplom_final2
             }
         }
 
-        private void SaveData(string filePath)
+        private void SaveData(string filePath) // Сохранение в excel
         {
             try
             {

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="641" Width="1312">
     <Grid Margin="10,0,10,0">
-        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,117,10">
+        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,117,0" VerticalScrollBarVisibility="Auto" Height="555" VerticalAlignment="Top">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="ContentTemplate">
