@@ -1,0 +1,80 @@
+﻿<Window x:Class="diplom_final2.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:diplom_final2"
+        mc:Ignorable="d"
+        Title="Window2" Height="450" Width="1383">
+    <Window.Resources>
+        <Style x:Key="TextWrappingStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Бюджет">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="Bu" AutoGenerateColumns="False" Margin="10,10,117,0" RowHeight="40" FrozenColumnCount="6">
+                        <DataGrid.ColumnHeaderStyle>
+                                <!-- перенос текста -->
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Шифр" Binding="{Binding Шифр}" Width="52"/>
+                                <DataGridTextColumn Header="Преподаватель" Binding="{Binding Преподаватель}" Width="200"/>
+                                <DataGridTextColumn Header="Дисциплина" Binding="{Binding Дисциплина}" Width="200" ElementStyle="{StaticResource TextWrappingStyle}"/>
+                                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" />
+                                <DataGridTextColumn Header="Курс" Binding="{Binding Курс}" Width="60" />
+                                <DataGridTextColumn Header="Семестр" Binding="{Binding Семестр}" Width="60"/>
+                                <DataGridTextColumn Header="Кол-во чел" Binding="{Binding Кол_чел}" Width="60"/>
+                                <DataGridTextColumn Header="Лекции_1" Binding="{Binding Лекции_1}" Width="70" />
+                                <DataGridTextColumn Header="Практические занятия_1" Binding="{Binding Практические_занятия_1}" Width="70"/>
+                                <DataGridTextColumn Header="Курсовые работы начитка_1" Binding="{Binding Курсовые_работы_начитка_1}" Width="70"/>
+                                <DataGridTextColumn Header="Проверка курсовой работы_1" Binding="{Binding Проверка_курсовой_работы_1}" Width="70"/>
+                                <DataGridTextColumn Header="Контрольные работы_1" Binding="{Binding Контрольные_работы_1}" Width="70"/>
+                                <DataGridTextColumn Header="РГР_1" Binding="{Binding РГР_1}" Width="70"/>
+                                <DataGridTextColumn Header="Текущие консультации_1" Binding="{Binding Текущие_консультации_1}" Width="70"/>
+                                <DataGridTextColumn Header="Зачет_1" Binding="{Binding Зачет_1}" Width="70"/>
+                                <DataGridTextColumn Header="Зачет с оценка_1" Binding="{Binding Зачет_оценка_1}" Width="70"/>
+                                <DataGridTextColumn Header="Экзамен консультация_1" Binding="{Binding Экзамен_консультация_1}" Width="70"/>
+                                <DataGridTextColumn Header="Всего за семестр_1" Binding="{Binding Всего_за_семестр_1}" Width="70"/>
+                                <DataGridTextColumn Header="Лекции_2" Binding="{Binding Лекции_2}" Width="70"/>
+                                <DataGridTextColumn Header="Практические занятия_2" Binding="{Binding Практические_занятия_2}" Width="70"/>
+                                <DataGridTextColumn Header="Курсовые работы начитка_2" Binding="{Binding Курсовые_работы_начитка_2}" Width="70"/>
+                                <DataGridTextColumn Header="Проверка курсовой работы_2" Binding="{Binding Проверка_курсовой_работы_2}" Width="70"/>
+                                <DataGridTextColumn Header="Контрольные работы_2" Binding="{Binding Контрольные_работы_2}" Width="70"/>
+                                <DataGridTextColumn Header="РГР_2" Binding="{Binding РГР_2}" Width="70"/>
+                                <DataGridTextColumn Header="Текущие консультации_2" Binding="{Binding Текущие_консультации_2}" Width="70"/>
+                                <DataGridTextColumn Header="Зачет_2" Binding="{Binding Зачет_2}" Width="70"/>
+                                <DataGridTextColumn Header="Зачет с оценка_2" Binding="{Binding Зачет_оценка_2}" Width="70"/>
+                                <DataGridTextColumn Header="Экзамен консультация_2" Binding="{Binding Экзамен_консультация_2}" Width="70"/>
+                                <DataGridTextColumn Header="Всего за семестр_2" Binding="{Binding Всего_за_семестр_2}" Width="70"/>
+                                <DataGridTextColumn Header="Всего за год" Binding="{Binding Всего_за_год}" Width="70"/>
+                            </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Внебюджет">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="NBu" AutoGenerateColumns="False" Margin="10,10,117,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Федералы">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="Fe" AutoGenerateColumns="False" Margin="10,10,117,0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
