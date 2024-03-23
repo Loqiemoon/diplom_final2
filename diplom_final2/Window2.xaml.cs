@@ -27,7 +27,9 @@ namespace diplom_final2
         {
             InitializeComponent();
             _filePath = filePath;
-            LoadDataAsync(_filePath);
+            LoadBudgetData(_filePath);
+            LoadNonBudgetData(_filePath);
+            LoadFederalData(_filePath);
         }
 
         public class DataExcel_2
@@ -179,24 +181,32 @@ namespace diplom_final2
             }
         }
 
-        private async void LoadDataAsync(string filePath)
+        private async void LoadBudgetData(string filePath)
         {
-            await Task.Run(() => LoadExcelData(filePath));
-
-            // Обновление UI в основном потоке после загрузки данных
-            // Например, обновление DataGrid, включая привязку данных
-            // или обновление других элементов интерфейса пользователя.
+            await Task.Run(() => LoadExcelData(filePath, "Бюджет", Bu));
             UpdateUI();
         }
 
-        private Task LoadExcelData(string filePath)
+        private async void LoadNonBudgetData(string filePath)
+        {
+            await Task.Run(() => LoadExcelData(filePath, "Внебюджет", NBu));
+            UpdateUI();
+        }
+
+        private async void LoadFederalData(string filePath)
+        {
+            await Task.Run(() => LoadExcelData(filePath, "Федералы", Fe));
+            UpdateUI();
+        }
+
+        private Task LoadExcelData(string filePath, string sheetName, DataGrid dataGrid)
         {
             try
             {
                 using (var package = new ExcelPackage(new FileInfo(filePath)))
                 {
                     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetName];
 
                     List<DataExcel_2> dataList = new List<DataExcel_2>();
                     int rowCount = worksheet.Dimension.Rows;
@@ -215,9 +225,7 @@ namespace diplom_final2
                     Dispatcher.Invoke(() =>
                     {
                         Console.WriteLine($"Loaded {dataList.Count} items.");
-
-                        // Задайте источник данных для DataGrid
-                        Bu.ItemsSource = dataList;
+                        dataGrid.ItemsSource = dataList;
                     });
                 }
             }
