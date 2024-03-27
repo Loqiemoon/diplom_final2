@@ -31,7 +31,13 @@
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Шифр" Binding="{Binding Шифр}" Width="52"/>
-                            <DataGridTextColumn Header="Преподаватель" Binding="{Binding Преподаватель}" Width="200"/>
+                            <DataGridComboBoxColumn x:Name="BПреподаватели"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedItemBinding="{Binding Преподаватель}">
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="Дисциплина" Binding="{Binding Дисциплина}" Width="200" ElementStyle="{StaticResource TextWrappingStyle}"/>
                             <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" />
                             <DataGridTextColumn Header="Курс" Binding="{Binding Курс}" Width="60" />
@@ -82,8 +88,12 @@
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Шифр" Binding="{Binding Шифр}" Width="52"/>
-                            <DataGridComboBoxColumn x:Name="Преподаватель"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedValuePath="ФИО">
-                                
+                            <DataGridComboBoxColumn x:Name="NПреподаватели"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedItemBinding="{Binding Преподаватель}">
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="Дисциплина" Binding="{Binding Дисциплина}" Width="200" ElementStyle="{StaticResource TextWrappingStyle}"/>
                             <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" />
@@ -135,7 +145,13 @@
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Шифр" Binding="{Binding Шифр}" Width="52"/>
-                            <DataGridTextColumn Header="Преподаватель" Binding="{Binding Преподаватель}" Width="200"/>
+                            <DataGridComboBoxColumn x:Name="FПреподаватели"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedItemBinding="{Binding Преподаватель}">
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="Дисциплина" Binding="{Binding Дисциплина}" Width="200" ElementStyle="{StaticResource TextWrappingStyle}"/>
                             <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" />
                             <DataGridTextColumn Header="Курс" Binding="{Binding Курс}" Width="60" />
@@ -169,6 +185,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-
+        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="1290,48,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Window>

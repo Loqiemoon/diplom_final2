@@ -27,25 +27,11 @@ namespace diplom_final2
         {
             InitializeComponent();
             _filePath = filePath;
-            //LoadBudgetData(_filePath);
-            //LoadNonBudgetData(_filePath);
-            //LoadFederalData(_filePath);
             LoadExcelData(_filePath, "Бюджет", Bu);
             LoadExcelData(_filePath, "Внебюджет", NBu);
             LoadExcelData(_filePath, "Федералы", Fe);
             LoadTeacher();
         }
-        //public string FIO
-        //{
-        //    get
-        //    {
-        //        return Преподаватель;
-        //    }
-        //    set
-        //    {
-
-        //    }
-        //}
 
         public class DataExcel_2
         {
@@ -196,24 +182,6 @@ namespace diplom_final2
             }
         }
 
-        private async void LoadBudgetData(string filePath)
-        {
-            await Task.Run(() => LoadExcelData(filePath, "Бюджет", Bu));
-            UpdateUI();
-        }
-
-        private async void LoadNonBudgetData(string filePath)
-        {
-            await Task.Run(() => LoadExcelData(filePath, "Внебюджет", NBu));
-            UpdateUI();
-        }
-
-        private async void LoadFederalData(string filePath)
-        {
-            await Task.Run(() => LoadExcelData(filePath, "Федералы", Fe));
-            UpdateUI();
-        }
-
         private void LoadExcelData(string filePath, string sheetName, DataGrid dataGrid)
         {
             try
@@ -248,37 +216,127 @@ namespace diplom_final2
             {
                 MessageBox.Show($"Произошла ошибка при загрузке данных из Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            //return Task.CompletedTask;
         }
-        private void LoadTeacher()
+
+        private List<string> LoadTeacherForList()
         {
-            List<string> fio = new List<string>();
+            List<string> teacherNames = new List<string>();
+
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Распределение нагрузки кафедры по преподавателям.xlsm");
+
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
-                // Загрузка данных в список объектов
-                List<DataExcel> dataList = new List<DataExcel>();
-                
                 for (int row = 2; row <= 27; row++)
                 {
-                    DataExcel dataItem = new DataExcel();
-                    
-                        var cellValue = worksheet.Cells[row, 3].Value;
-                        dataItem.Value(3, cellValue);
-                    
-                    dataList.Add(dataItem);
+                    var cellValue = worksheet.Cells[row, 3].Value;
+                    if (cellValue != null)
+                    {
+                        teacherNames.Add(cellValue.ToString());
+                    }
                 }
-                Преподаватель.ItemsSource = dataList;
+            }
+
+            return teacherNames;
+        }
+
+        private void LoadTeacher()
+        {
+            List<string> teacherNames = LoadTeacherForList();
+
+            BПреподаватели.ItemsSource = teacherNames; 
+            BПреподаватели.DisplayMemberPath = ".";
+            NПреподаватели.ItemsSource = teacherNames;
+            NПреподаватели.DisplayMemberPath = ".";
+            FПреподаватели.ItemsSource = teacherNames;
+            FПреподаватели.DisplayMemberPath = ".";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDataB(_filePath);
+            SaveDataN(_filePath);
+            SaveDataF(_filePath);
+        }
+
+        private void SaveDataB(string filePath) // Сохранение в excel
+        {
+            try
+            {
+                List<DataExcel_2> dataList = Bu.ItemsSource.Cast<DataExcel_2>().ToList();
+
+                using (var package = new ExcelPackage(new FileInfo(_filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Бюджет"];
+
+                    for (int i = 0; i < dataList.Count; i++)
+                    {
+                        worksheet.Cells[i + 4, 2].Value = dataList[i].Преподаватель;
+                    }
+
+                    package.Save();
+                }
+
+                MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void UpdateUI()
+        private void SaveDataN(string filePath) // Сохранение в excel
         {
-          
+            try
+            {
+                List<DataExcel_2> dataList = NBu.ItemsSource.Cast<DataExcel_2>().ToList();
+
+                using (var package = new ExcelPackage(new FileInfo(_filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Внебюджет"];
+
+                    for (int i = 0; i < dataList.Count; i++)
+                    {
+                        worksheet.Cells[i + 4, 2].Value = dataList[i].Преподаватель;
+                    }
+
+                    package.Save();
+                }
+
+                MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void SaveDataF(string filePath) // Сохранение в excel
+        {
+            try
+            {
+                List<DataExcel_2> dataList = Fe.ItemsSource.Cast<DataExcel_2>().ToList();
+
+                using (var package = new ExcelPackage(new FileInfo(_filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Федералы"];
+
+                    for (int i = 0; i < dataList.Count; i++)
+                    {
+                        worksheet.Cells[i + 4, 2].Value = dataList[i].Преподаватель;
+                    }
+
+                    package.Save();
+                }
+
+                MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
