@@ -27,10 +27,25 @@ namespace diplom_final2
         {
             InitializeComponent();
             _filePath = filePath;
-            LoadBudgetData(_filePath);
-            LoadNonBudgetData(_filePath);
-            LoadFederalData(_filePath);
+            //LoadBudgetData(_filePath);
+            //LoadNonBudgetData(_filePath);
+            //LoadFederalData(_filePath);
+            LoadExcelData(_filePath, "Бюджет", Bu);
+            LoadExcelData(_filePath, "Внебюджет", NBu);
+            LoadExcelData(_filePath, "Федералы", Fe);
+            LoadTeacher();
         }
+        //public string FIO
+        //{
+        //    get
+        //    {
+        //        return Преподаватель;
+        //    }
+        //    set
+        //    {
+
+        //    }
+        //}
 
         public class DataExcel_2
         {
@@ -199,7 +214,7 @@ namespace diplom_final2
             UpdateUI();
         }
 
-        private Task LoadExcelData(string filePath, string sheetName, DataGrid dataGrid)
+        private void LoadExcelData(string filePath, string sheetName, DataGrid dataGrid)
         {
             try
             {
@@ -234,7 +249,31 @@ namespace diplom_final2
                 MessageBox.Show($"Произошла ошибка при загрузке данных из Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
+        }
+        private void LoadTeacher()
+        {
+            List<string> fio = new List<string>();
+            string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Распределение нагрузки кафедры по преподавателям.xlsm");
+            using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                // Загрузка данных в список объектов
+                List<DataExcel> dataList = new List<DataExcel>();
+                
+                for (int row = 2; row <= 27; row++)
+                {
+                    DataExcel dataItem = new DataExcel();
+                    
+                        var cellValue = worksheet.Cells[row, 3].Value;
+                        dataItem.Value(3, cellValue);
+                    
+                    dataList.Add(dataItem);
+                }
+                Преподаватель.ItemsSource = dataList;
+            }
         }
 
         private void UpdateUI()

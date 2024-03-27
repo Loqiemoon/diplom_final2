@@ -82,7 +82,9 @@
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Шифр" Binding="{Binding Шифр}" Width="52"/>
-                            <DataGridTextColumn Header="Преподаватель" Binding="{Binding Преподаватель}" Width="200"/>
+                            <DataGridComboBoxColumn x:Name="Преподаватель"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedValuePath="ФИО">
+                                
+                            </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="Дисциплина" Binding="{Binding Дисциплина}" Width="200" ElementStyle="{StaticResource TextWrappingStyle}"/>
                             <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" />
                             <DataGridTextColumn Header="Курс" Binding="{Binding Курс}" Width="60" />
