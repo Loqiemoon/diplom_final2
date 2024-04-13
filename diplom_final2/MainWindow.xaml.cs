@@ -16,19 +16,32 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using static diplom_final2.Window2;
 
 namespace diplom_final2
 {
     public partial class MainWindow : Window
     {
-        public string FilePath {  get; }
+        public string filePath;
 
         public MainWindow()
         {
             InitializeComponent();
             OpenFile();
+
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xlsx;*.xlsm",
+                Title = "Выберите файл с нагрузкой excel"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                filePath = openFileDialog.FileName;
+                //Window2 window2 = new Window2(filePath);
+            }
         }
-        
+
         private void OpenFile() // Открываю файл в корне
         {
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -183,17 +196,22 @@ namespace diplom_final2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)//кнопка открытия 2 окна
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Excel Files|*.xlsx;*.xlsm",
-                Title = "Выберите файл с нагрузкой excel"
-            };
+            Window2 window2 = new Window2(filePath);
+            window2.Show();
+        }
 
-            if (openFileDialog.ShowDialog() == true)
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Raschet();
+        }
+
+        private void Raschet()
+        {
+            Window2 window2 = new Window2(filePath); // Создаем экземпляр второго окна
+            List<Two> teacherDataList = window2.NameHour(); // Вызываем метод NameHour() для заполнения списка
+            foreach (var item in teacherDataList)
             {
-                string filePath = openFileDialog.FileName;
-                Window2 window2 = new Window2(filePath);
-                window2.Show();
+                Console.WriteLine($"Имя: {item.Name}, Часы: {item.Hour}");
             }
         }
     }

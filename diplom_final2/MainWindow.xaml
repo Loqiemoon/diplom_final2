@@ -36,7 +36,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Сохранить" HorizontalAlignment="Left" Margin="1212,13,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="2 окно" HorizontalAlignment="Left" Height="26" Margin="1212,217,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click_1"/>
+        <Button Content="2 окно" HorizontalAlignment="Left" Height="26" Margin="1212,51,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click_1"/>
+        <Button Content="Расчитать" HorizontalAlignment="Left" Height="25" Margin="1212,116,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click_2"/>
 
     </Grid>
 </Window>

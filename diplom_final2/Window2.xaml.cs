@@ -23,6 +23,7 @@ namespace diplom_final2
     public partial class Window2 : Window
     {
         private string _filePath;
+
         public Window2(string filePath)
         {
             InitializeComponent();
@@ -248,8 +249,10 @@ namespace diplom_final2
 
             BПреподаватели.ItemsSource = teacherNames; 
             BПреподаватели.DisplayMemberPath = ".";
+
             NПреподаватели.ItemsSource = teacherNames;
             NПреподаватели.DisplayMemberPath = ".";
+
             FПреподаватели.ItemsSource = teacherNames;
             FПреподаватели.DisplayMemberPath = ".";
         }
@@ -278,7 +281,8 @@ namespace diplom_final2
 
                     package.Save();
                 }
-
+                PrintNonEmptyTeachers();
+                NameHour();
                 MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -337,6 +341,46 @@ namespace diplom_final2
             {
                 MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void PrintNonEmptyTeachers()
+        {
+            foreach (var item in Bu.ItemsSource)
+            {
+                var dataItem = item as DataExcel_2;
+                if (dataItem != null && !string.IsNullOrEmpty(dataItem.Преподаватель))
+                {
+                    var yearTotal = Bu.Columns[29].GetCellContent(dataItem) as TextBlock;
+                    if (yearTotal != null)
+                    {
+                        Console.WriteLine($"Преподаватель: {dataItem.Преподаватель}, Всего за год: {yearTotal.Text}");
+                    }
+                }
+            }
+        }
+
+        public List<Two> NameHour()
+        {
+            List<Two> teacherDataList = new List<Two>();
+            foreach (var item in Bu.ItemsSource)
+            {
+                var dataItem = item as DataExcel_2;
+                if (dataItem != null && !string.IsNullOrEmpty(dataItem.Преподаватель))
+                {
+                    var TotalHour = Bu.Columns[29].GetCellContent(dataItem) as TextBlock;
+                    if (TotalHour != null)
+                    {
+                        teacherDataList.Add(new Two { Name = dataItem.Преподаватель, Hour = int.Parse(TotalHour.Text) });
+                    }
+                }
+            }
+            return teacherDataList;
+        }
+
+        public class Two
+        {
+            public string Name { get; set; }
+            public int Hour { get; set; }
         }
     }
 }

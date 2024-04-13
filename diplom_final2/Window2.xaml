@@ -34,7 +34,7 @@
                             <DataGridComboBoxColumn x:Name="BПреподаватели"  Header="Преподаватель"  Width="200" DisplayMemberPath="ФИО" SelectedItemBinding="{Binding Преподаватель}">
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="ComboBox">
-
+                                        
                                     </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>
