@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static diplom_final2.MainWindow;
+using static OfficeOpenXml.ExcelErrorValue;
 
 namespace diplom_final2
 {
@@ -65,7 +66,8 @@ namespace diplom_final2
             public float? Зачет_оценка_2 { get; set; }
             public float? Экзамен_консультация_2 { get; set; }
             public float? Всего_за_семестр_2 { get; set; }
-            public float? Всего_за_год { get; set; }
+            //public float? Всего_за_год { get; set; }
+            public string Всего_за_год { get; set; }
 
             public void Value_2(int columnIndex, object value)
             {
@@ -159,7 +161,8 @@ namespace diplom_final2
                         Всего_за_семестр_2 = ConvertToFloat(value);
                         break;
                     case 30:
-                        Всего_за_год = ConvertToFloat(value);
+                        //Всего_за_год = ConvertToFloat(value);
+                        Всего_за_год = Convert.ToString(value);
                         break;
                     default:
                         break;
@@ -281,7 +284,6 @@ namespace diplom_final2
 
                     package.Save();
                 }
-                PrintNonEmptyTeachers();
                 NameHour();
                 MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -343,22 +345,6 @@ namespace diplom_final2
             }
         }
 
-        private void PrintNonEmptyTeachers()
-        {
-            foreach (var item in Bu.ItemsSource)
-            {
-                var dataItem = item as DataExcel_2;
-                if (dataItem != null && !string.IsNullOrEmpty(dataItem.Преподаватель))
-                {
-                    var yearTotal = Bu.Columns[29].GetCellContent(dataItem) as TextBlock;
-                    if (yearTotal != null)
-                    {
-                        Console.WriteLine($"Преподаватель: {dataItem.Преподаватель}, Всего за год: {yearTotal.Text}");
-                    }
-                }
-            }
-        }
-
         public List<Two> NameHour()
         {
             List<Two> teacherDataList = new List<Two>();
@@ -367,10 +353,21 @@ namespace diplom_final2
                 var dataItem = item as DataExcel_2;
                 if (dataItem != null && !string.IsNullOrEmpty(dataItem.Преподаватель))
                 {
-                    var TotalHour = Bu.Columns[29].GetCellContent(dataItem) as TextBlock;
+                    var TotalHour = (Bu.Columns[29].GetCellContent(dataItem) as TextBlock)?.Text;
                     if (TotalHour != null)
                     {
-                        teacherDataList.Add(new Two { Name = dataItem.Преподаватель, Hour = int.Parse(TotalHour.Text) });
+                        //TotalHour = TotalHour.Replace(",", ".");
+                        float result;
+                        if (float.TryParse(TotalHour, out result))
+                        {
+                            Console.WriteLine($"Преобразование успешно: {result}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Не удалось преобразовать строку '{TotalHour}' в число типа float");
+                        }
+                        teacherDataList.Add(new Two { Name = dataItem.Преподаватель, Hour = float.Parse(TotalHour) });
+                        Console.WriteLine($"Преподаватель: {dataItem.Преподаватель}, Всего за год: {TotalHour}");
                     }
                 }
             }
@@ -380,7 +377,7 @@ namespace diplom_final2
         public class Two
         {
             public string Name { get; set; }
-            public int Hour { get; set; }
+            public float Hour { get; set; }
         }
     }
 }
