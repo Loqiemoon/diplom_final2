@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="641" Width="1312">
     <Grid Margin="10,0,10,0">
-        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,117,0" VerticalScrollBarVisibility="Auto" Height="555" VerticalAlignment="Top">
+        <DataGrid x:Name="raspr" AutoGenerateColumns="False" Margin="10,10,70,0" VerticalScrollBarVisibility="Auto" Height="555" VerticalAlignment="Top">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="ContentTemplate">
@@ -22,8 +22,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="NN" Binding="{Binding NN}" Width="30" />
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Фамилия}" Width="80"/>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding ФИО}" Width="200"/>
-                <DataGridTextColumn Header="Должность" Binding="{Binding Должность}" Width="80"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding ФИО}" Width="220"/>
+                <DataGridComboBoxColumn x:Name="Должности" Header="Должность" Width="105" DisplayMemberPath="Должность" SelectedItemBinding="{Binding Должность}"/>
                 <DataGridTextColumn Header="Бюджет" Binding="{Binding Бюджет}" Width="80"/>
                 <DataGridTextColumn Header="Внебюджет" Binding="{Binding Внебюджет}" Width="80"/>
                 <DataGridTextColumn Header="Федералы" Binding="{Binding Федералы}" Width="80"/>
@@ -35,9 +35,10 @@
                 <DataGridTextColumn Header="Необходимая ставка" Binding="{Binding Необходимая_ставка}" Width="88"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="1212,13,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="2 окно" HorizontalAlignment="Left" Height="26" Margin="1212,51,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click_1"/>
-        <Button Content="Расчитать" HorizontalAlignment="Left" Height="25" Margin="1212,116,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click_2"/>
+        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="1212,13,0,0" VerticalAlignment="Top" Click="Button_Click" Width="65" Height="25"/>
+        <Button Content="2 окно" HorizontalAlignment="Left" Height="25" Margin="1212,51,0,0" VerticalAlignment="Top" Width="65" Click="Button_Click_1"/>
+        <Button Content="Расчитать" HorizontalAlignment="Left" Height="25" Margin="1212,92,0,0" VerticalAlignment="Top" Width="65" Click="Button_Click_2"/>
+        <Button Content="Печать" HorizontalAlignment="Left" Height="25" Margin="1212,133,0,0" VerticalAlignment="Top" Width="65" Click="Button_Click_3"/>
 
     </Grid>
 </Window>

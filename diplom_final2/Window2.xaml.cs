@@ -41,32 +41,31 @@ namespace diplom_final2
             public string Преподаватель { get; set; }
             public string Дисциплина { get; set; }
             public string Группа { get; set; }
-            public int? Курс { get; set; }
-            public int? Семестр { get; set; }
-            public int? Кол_чел { get; set; }
-            public float? Лекции_1 { get; set; }
-            public float? Практические_занятия_1 { get; set; }
-            public float? Курсовые_работы_начитка_1 { get; set; }
-            public float? Проверка_курсовой_работы_1 { get; set; }
-            public float? Контрольные_работы_1 { get; set; }
-            public float? РГР_1 { get; set; }
-            public float? Текущие_консультации_1 { get; set; }
-            public float? Зачет_1 { get; set; }
-            public float? Зачет_оценка_1 { get; set; }
-            public float? Экзамен_консультация_1 { get; set; }
-            public float? Всего_за_семестр_1 { get; set; }
-            public float? Лекции_2 { get; set; }
-            public float? Практические_занятия_2 { get; set; }
-            public float? Курсовые_работы_начитка_2 { get; set; }
-            public float? Проверка_курсовой_работы_2 { get; set; }
-            public float? Контрольные_работы_2 { get; set; }
-            public float? РГР_2 { get; set; }
-            public float? Текущие_консультации_2 { get; set; }
-            public float? Зачет_2 { get; set; }
-            public float? Зачет_оценка_2 { get; set; }
-            public float? Экзамен_консультация_2 { get; set; }
-            public float? Всего_за_семестр_2 { get; set; }
-            //public float? Всего_за_год { get; set; }
+            public string Курс { get; set; }
+            public string Семестр { get; set; }
+            public string Кол_чел { get; set; }
+            public string Лекции_1 { get; set; }
+            public string Практические_занятия_1 { get; set; }
+            public string Курсовые_работы_начитка_1 { get; set; }
+            public string Проверка_курсовой_работы_1 { get; set; }
+            public string Контрольные_работы_1 { get; set; }
+            public string РГР_1 { get; set; }
+            public string Текущие_консультации_1 { get; set; }
+            public string Зачет_1 { get; set; }
+            public string Зачет_оценка_1 { get; set; }
+            public string Экзамен_консультация_1 { get; set; }
+            public string Всего_за_семестр_1 { get; set; }
+            public string Лекции_2 { get; set; }
+            public string Практические_занятия_2 { get; set; }
+            public string Курсовые_работы_начитка_2 { get; set; }
+            public string Проверка_курсовой_работы_2 { get; set; }
+            public string Контрольные_работы_2 { get; set; }
+            public string РГР_2 { get; set; }
+            public string Текущие_консультации_2 { get; set; }
+            public string Зачет_2 { get; set; }
+            public string Зачет_оценка_2 { get; set; }
+            public string Экзамен_консультация_2 { get; set; }
+            public string Всего_за_семестр_2 { get; set; }
             public string Всего_за_год { get; set; }
 
             public void Value_2(int columnIndex, object value)
@@ -86,103 +85,86 @@ namespace diplom_final2
                         Группа = Convert.ToString(value);
                         break;
                     case 5:
-                        Курс = ConvertToInt(value);
+                        Курс = Convert.ToString(value);
                         break;
                     case 6:
-                        Семестр = ConvertToInt(value);
+                        Семестр = Convert.ToString(value);
                         break;
                     case 7:
-                        Кол_чел = ConvertToInt(value);
+                        Кол_чел = Convert.ToString(value);
                         break;
                     case 8:
-                        Лекции_1 = ConvertToFloat(value);
+                        Лекции_1 = Convert.ToString(value);
                         break;
                     case 9:
-                        Практические_занятия_1 = ConvertToFloat(value);
+                        Практические_занятия_1 = Convert.ToString(value);
                         break;
                     case 10:
-                        Курсовые_работы_начитка_1 = ConvertToFloat(value);
+                        Курсовые_работы_начитка_1 = Convert.ToString(value);
                         break;
                     case 11:
-                        Проверка_курсовой_работы_1 = ConvertToFloat(value);
+                        Проверка_курсовой_работы_1 = Convert.ToString(value);
                         break;
                     case 12:
-                        Контрольные_работы_1 = ConvertToFloat(value);
+                        Контрольные_работы_1 = Convert.ToString(value);
                         break;
                     case 13:
-                        РГР_1 = ConvertToFloat(value);
+                        РГР_1 = Convert.ToString(value);
                         break;
                     case 14:
-                        Текущие_консультации_1 = ConvertToFloat(value);
+                        Текущие_консультации_1 = Convert.ToString(value);
                         break;
                     case 15:
-                        Зачет_1 = ConvertToFloat(value);
+                        Зачет_1 = Convert.ToString(value);
                         break;
                     case 16:
-                        Зачет_оценка_1 = ConvertToFloat(value);
+                        Зачет_оценка_1 = Convert.ToString(value);
                         break;
                     case 17:
-                        Экзамен_консультация_1 = ConvertToFloat(value);
+                        Экзамен_консультация_1 = Convert.ToString(value);
                         break;
                     case 18:
-                        Всего_за_семестр_1 = ConvertToFloat(value);
+                        Всего_за_семестр_1 = Convert.ToString(value);
                         break;
                     case 19:
-                        Лекции_2 = ConvertToFloat(value);
+                        Лекции_2 = Convert.ToString(value);
                         break;
                     case 20:
-                        Практические_занятия_2 = ConvertToFloat(value);
+                        Практические_занятия_2 = Convert.ToString(value);
                         break;
                     case 21:
-                        Курсовые_работы_начитка_2 = ConvertToFloat(value);
+                        Курсовые_работы_начитка_2 = Convert.ToString(value);
                         break;
                     case 22:
-                        Проверка_курсовой_работы_2 = ConvertToFloat(value);
+                        Проверка_курсовой_работы_2 = Convert.ToString(value);
                         break;
                     case 23:
-                        Контрольные_работы_2 = ConvertToFloat(value);
+                        Контрольные_работы_2 = Convert.ToString(value);
                         break;
                     case 24:
-                        РГР_2 = ConvertToFloat(value);
+                        РГР_2 = Convert.ToString(value); ;
                         break;
                     case 25:
-                        Текущие_консультации_2 = ConvertToFloat(value);
+                        Текущие_консультации_2 = Convert.ToString(value);
                         break;
                     case 26:
-                        Зачет_2 = ConvertToFloat(value);
+                        Зачет_2 = Convert.ToString(value);
                         break;
                     case 27:
-                        Зачет_оценка_2 = ConvertToFloat(value);
+                        Зачет_оценка_2 = Convert.ToString(value);
                         break;
                     case 28:
-                        Экзамен_консультация_2 = ConvertToFloat(value);
+                        Экзамен_консультация_2 = Convert.ToString(value);
                         break;
                     case 29:
-                        Всего_за_семестр_2 = ConvertToFloat(value);
+                        Всего_за_семестр_2 = Convert.ToString(value);
                         break;
                     case 30:
-                        //Всего_за_год = ConvertToFloat(value);
                         Всего_за_год = Convert.ToString(value);
                         break;
                     default:
                         break;
                 }
-            }
-            private int? ConvertToInt(object value)
-            {
-                if (value != null && int.TryParse(value.ToString(), out int intValue))
-                {
-                    return intValue;
-                }
-                return null;
-            }
-            private float? ConvertToFloat(object value)
-            {
-                if (value != null && float.TryParse(value.ToString(), out float floatValue))
-                {
-                    return floatValue;
-                }
-                return null;
             }
         }
 
@@ -227,7 +209,7 @@ namespace diplom_final2
             List<string> teacherNames = new List<string>();
 
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Распределение нагрузки кафедры по преподавателям.xlsm");
+            string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Список преподавателей.xlsx");
 
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {
@@ -284,7 +266,6 @@ namespace diplom_final2
 
                     package.Save();
                 }
-                NameHour();
                 MessageBox.Show("Данные успешно сохранены в Excel.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -345,34 +326,39 @@ namespace diplom_final2
             }
         }
 
-        public List<Two> NameHour()
+        public List<Two> NameHour(ItemsControl source)
         {
-            List<Two> teacherDataList = new List<Two>();
-            foreach (var item in Bu.ItemsSource)
+            List<Two> teacherList = new List<Two>();
+
+            foreach (var item in source.ItemsSource)
             {
                 var dataItem = item as DataExcel_2;
                 if (dataItem != null && !string.IsNullOrEmpty(dataItem.Преподаватель))
                 {
-                    var TotalHour = (Bu.Columns[29].GetCellContent(dataItem) as TextBlock)?.Text;
+                    var TotalHour = dataItem.Всего_за_год;
                     if (TotalHour != null)
                     {
-                        //TotalHour = TotalHour.Replace(",", ".");
-                        float result;
-                        if (float.TryParse(TotalHour, out result))
-                        {
-                            Console.WriteLine($"Преобразование успешно: {result}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Не удалось преобразовать строку '{TotalHour}' в число типа float");
-                        }
-                        teacherDataList.Add(new Two { Name = dataItem.Преподаватель, Hour = float.Parse(TotalHour) });
-                        Console.WriteLine($"Преподаватель: {dataItem.Преподаватель}, Всего за год: {TotalHour}");
+                        teacherList.Add(new Two { Name = dataItem.Преподаватель, Hour = float.Parse(TotalHour) });
                     }
                 }
             }
-            return teacherDataList;
+
+            var groupedByName = teacherList.GroupBy(t => t.Name)
+                                           .Select(g => new Two
+                                           {
+                                               Name = g.Key,
+                                               Hour = g.Sum(item => item.Hour)
+                                           });
+
+            Console.WriteLine("Сумма часов для каждого имени:");
+            foreach (var item in groupedByName)
+            {
+                Console.WriteLine($"Имя: {item.Name}, Часы: {item.Hour}");
+            }
+
+            return groupedByName.ToList();
         }
+
 
         public class Two
         {

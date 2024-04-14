@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,6 +30,7 @@ namespace diplom_final2
         {
             InitializeComponent();
             OpenFile();
+            LoadDolj();
 
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -38,14 +41,13 @@ namespace diplom_final2
             if (openFileDialog.ShowDialog() == true)
             {
                 filePath = openFileDialog.FileName;
-                //Window2 window2 = new Window2(filePath);
             }
         }
 
         private void OpenFile() // Открываю файл в корне
         {
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Распределение нагрузки кафедры по преподавателям.xlsm");
+            string excelFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(exePath), "Список преподавателей.xlsx");
 
             if (System.IO.File.Exists(excelFilePath))
             {
@@ -63,15 +65,15 @@ namespace diplom_final2
             public string Фамилия { get; set; }
             public string ФИО { get; set; }
             public string Должность { get; set; }
-            public float? Бюджет { get; set; }
-            public float? Внебюджет { get; set; }
-            public float? Федералы { get; set; }
-            public float? Часы_по_бюджету { get; set; }
-            public float? Ставка_по_бюджету { get; set; }
-            public float? Часы_по_внебюджету { get; set; }
-            public float? Ставка_по_внебюджету { get; set; }
-            public float? Ставка_итого { get; set; }
-            public float? Необходимая_ставка { get; set; }
+            public string Бюджет { get; set; }
+            public string Внебюджет { get; set; }
+            public string Федералы { get; set; }
+            public string Часы_по_бюджету { get; set; }
+            public string Ставка_по_бюджету { get; set; }
+            public string Часы_по_внебюджету { get; set; }
+            public string Ставка_по_внебюджету { get; set; }
+            public string Ставка_итого { get; set; }
+            public string Необходимая_ставка { get; set; }
 
             public void Value(int columnIndex, object value)
             {
@@ -93,45 +95,36 @@ namespace diplom_final2
                             Должность = value.ToString();
                             break;
                         case 5:
-                            Бюджет = ConvertToFloat(value);
+                            Бюджет = value.ToString();
                             break;
                         case 6:
-                            Внебюджет = ConvertToFloat(value);
+                            Внебюджет = value.ToString();
                             break;
                         case 7:
-                            Федералы = ConvertToFloat(value);
+                            Федералы = value.ToString();
                             break;
                         case 8:
-                            Часы_по_бюджету = ConvertToFloat(value);
+                            Часы_по_бюджету = value.ToString();
                             break;
                         case 9:
-                            Ставка_по_бюджету = ConvertToFloat(value);
+                            Ставка_по_бюджету = value.ToString();
                             break;
                         case 10:
-                            Часы_по_внебюджету = ConvertToFloat(value);
+                            Часы_по_внебюджету = value.ToString();
                             break;
                         case 11:
-                            Ставка_по_внебюджету = ConvertToFloat(value);
+                            Ставка_по_внебюджету = value.ToString();
                             break;
                         case 12:
-                            Ставка_итого = ConvertToFloat(value);
+                            Ставка_итого = value.ToString();
                             break;
                         case 13:
-                            Необходимая_ставка = ConvertToFloat(value);
+                            Необходимая_ставка = value.ToString();
                             break;
                         default:
                             break;
                     }
                 }
-            }
-
-            private float? ConvertToFloat(object value)
-            {
-                if (value != null && float.TryParse(value.ToString(), out float floatValue))
-                {
-                    return floatValue;
-                }
-                return null;
             }
         }
 
@@ -141,8 +134,6 @@ namespace diplom_final2
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
-                // Загрузка данных в список объектов
                 List<DataExcel> dataList = new List<DataExcel>();
                 int rowCount = worksheet.Dimension.Rows;
                 int colCount = worksheet.Dimension.Columns;
@@ -166,18 +157,24 @@ namespace diplom_final2
             try
             {
                 List<DataExcel> dataList = raspr.ItemsSource.Cast<DataExcel>().ToList();
-
                 using (var package = new ExcelPackage(new FileInfo(filePath)))
                 {
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
                     for (int i = 0; i < dataList.Count; i++)
                     {
                         worksheet.Cells[i + 2, 2].Value = dataList[i].Фамилия;
                         worksheet.Cells[i + 2, 3].Value = dataList[i].ФИО;
-                        // Добавьте код для остальных свойств
+                        worksheet.Cells[i + 2, 4].Value = dataList[i].Должность;
+                        worksheet.Cells[i + 2, 5].Value = dataList[i].Бюджет;
+                        worksheet.Cells[i + 2, 6].Value = dataList[i].Внебюджет;
+                        worksheet.Cells[i + 2, 7].Value = dataList[i].Федералы;
+                        worksheet.Cells[i + 2, 8].Value = dataList[i].Часы_по_бюджету;
+                        worksheet.Cells[i + 2, 9].Value = dataList[i].Ставка_по_бюджету;
+                        worksheet.Cells[i + 2, 10].Value = dataList[i].Часы_по_внебюджету;
+                        worksheet.Cells[i + 2, 11].Value = dataList[i].Ставка_по_внебюджету;
+                        worksheet.Cells[i + 2, 12].Value = dataList[i].Ставка_итого;
+                        worksheet.Cells[i + 2, 13].Value = dataList[i].Необходимая_ставка;
                     }
-
                     package.Save();
                 }
 
@@ -189,30 +186,156 @@ namespace diplom_final2
             }
         }
 
+        private void SaveDataAuto(string filePath) // Сохранение в excel  не заметно для пользователя
+        {
+            try
+            {
+                List<DataExcel> dataList = raspr.ItemsSource.Cast<DataExcel>().ToList();
+                using (var package = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    for (int i = 0; i < dataList.Count; i++)
+                    {
+                        worksheet.Cells[i + 2, 2].Value = dataList[i].Фамилия;
+                        worksheet.Cells[i + 2, 3].Value = dataList[i].ФИО;
+                        worksheet.Cells[i + 2, 4].Value = dataList[i].Должность;
+                        worksheet.Cells[i + 2, 5].Value = dataList[i].Бюджет;
+                        worksheet.Cells[i + 2, 6].Value = dataList[i].Внебюджет;
+                        worksheet.Cells[i + 2, 7].Value = dataList[i].Федералы;
+                        worksheet.Cells[i + 2, 8].Value = dataList[i].Часы_по_бюджету;
+                        worksheet.Cells[i + 2, 9].Value = dataList[i].Ставка_по_бюджету;
+                        worksheet.Cells[i + 2, 10].Value = dataList[i].Часы_по_внебюджету;
+                        worksheet.Cells[i + 2, 11].Value = dataList[i].Ставка_по_внебюджету;
+                        worksheet.Cells[i + 2, 12].Value = dataList[i].Ставка_итого;
+                        worksheet.Cells[i + 2, 13].Value = dataList[i].Необходимая_ставка;
+                    }
+
+                    package.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при сохранении данных в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)//кнопка сохранения
         {
-            SaveData("Распределение нагрузки кафедры по преподавателям.xlsm");
+            SaveData("Список преподавателей.xlsx");
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)//кнопка открытия 2 окна
         {
+            SaveDataAuto("Список преподавателей.xlsx");
             Window2 window2 = new Window2(filePath);
             window2.Show();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_2(object sender, RoutedEventArgs e)//кнопка чтоб раскидать часы
         {
-            Raschet();
+            Window2 window2 = new Window2(filePath);
+            List<Two> BuNameHour = window2.NameHour(window2.Bu);
+            ForRasp(BuNameHour, "Бюджет");
+            List<Two> NBuNameHour = window2.NameHour(window2.NBu);
+            ForRasp(NBuNameHour, "Внебюджет");
+            List<Two> FeNameHour = window2.NameHour(window2.Fe);
+            ForRasp(FeNameHour, "Федералы");
+            raspr.Items.Refresh();
+            SumBNF();
+            raspr.Items.Refresh();
+            SaveDataAuto("Список преподавателей.xlsx");
         }
 
-        private void Raschet()
+        private List<string> Doljnost()//список для Должности
         {
-            Window2 window2 = new Window2(filePath); // Создаем экземпляр второго окна
-            List<Two> teacherDataList = window2.NameHour(); // Вызываем метод NameHour() для заполнения списка
-            foreach (var item in teacherDataList)
+            List<string> dolj = new List<string>();
+            dolj.Add("Профессор");
+            dolj.Add("Доцент");
+            dolj.Add("Ст.преподаватель");
+            dolj.Add("Преподаватель");
+            dolj.Add("Аспирант");
+
+            return dolj;
+        }
+
+        private void LoadDolj()//отображаю в выпадающем списке
+        {
+            List<string> dolj = Doljnost();
+            Должности.ItemsSource = dolj;
+            Должности.DisplayMemberPath = ".";
+        }
+
+        private void ForRasp(List<Two> NameHour, string BNF)//закидываю часы 
+        {
+            Dictionary<string, float> name = new Dictionary<string, float>();
+            foreach (var item in NameHour)
             {
-                Console.WriteLine($"Имя: {item.Name}, Часы: {item.Hour}");
+                name[item.Name] = item.Hour;
             }
+
+            foreach (var rowItem in raspr.Items)
+            {
+                var dataItem = rowItem as DataExcel;
+                if (dataItem != null && !string.IsNullOrEmpty(dataItem.ФИО))
+                {
+                    string fio = dataItem.ФИО;
+                    if (name.ContainsKey(fio))
+                    {
+                        if (BNF == "Бюджет")
+                        {
+                            dataItem.Бюджет = name[fio].ToString();
+                        }
+                        if (BNF == "Внебюджет")
+                        {
+                            dataItem.Внебюджет = name[fio].ToString();
+                        }
+                        if (BNF == "Федералы")
+                        {
+                            dataItem.Федералы = name[fio].ToString();
+                        }
+                    }
+                    //raspr.Items.Refresh();
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        private void SumBNF()//считаю часы и ставки
+        {
+            foreach (var rowItem in raspr.Items)
+            {
+                var dataItem = rowItem as DataExcel;
+                if (dataItem != null && !string.IsNullOrEmpty(dataItem.ФИО))
+                {
+                    dataItem.Часы_по_бюджету = (float.Parse(dataItem.Бюджет) + float.Parse(dataItem.Федералы)).ToString("F2");
+                    dataItem.Часы_по_внебюджету = dataItem.Внебюджет;
+                    if (dataItem.Должность == "Профессор")
+                    {
+                        dataItem.Ставка_по_бюджету = (float.Parse(dataItem.Часы_по_бюджету) / 600).ToString("F2");
+                        dataItem.Ставка_по_внебюджету = (float.Parse(dataItem.Часы_по_внебюджету) / 600).ToString("F2");
+                    }
+                    else
+                    {
+                        dataItem.Ставка_по_бюджету = (float.Parse(dataItem.Часы_по_бюджету) / 899).ToString("F2");
+                        dataItem.Ставка_по_внебюджету = (float.Parse(dataItem.Часы_по_внебюджету) / 899).ToString("F2");
+                    }
+                    dataItem.Ставка_итого = (float.Parse(dataItem.Ставка_по_бюджету) + float.Parse(dataItem.Ставка_по_внебюджету)).ToString("F2");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            //raspr.Items.Refresh();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)//открыть excel для печати
+        {
+            SaveDataAuto("Список преподавателей.xlsx");
+            Process.Start("Список преподавателей.xlsx");
         }
     }
 }
